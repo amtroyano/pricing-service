@@ -1,0 +1,62 @@
+#  Server
+server:
+  port: 8080
+
+
+# Spring Boot configuration
+spring:
+  profiles:
+    active: ${env.PROFILE:local}
+  datasource:
+    username: sa
+    password: 
+    url: jdbc:h2:mem:pricepoc
+    platform: h2
+        
+  # JPA properties
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        use_sql_comments: true
+        format_sql: true
+        type: DEBUG
+        temp:
+          use_jdbc_metadata_defaults: false
+  h2:
+    console:
+      enabled: true
+              
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    displayRequestDuration: true
+    csrf:
+      enabled: true
+# custom path for api docs
+  api-docs:
+    path: v3/api-docs
+
+  
+openapi:
+  info:
+#    title: Info title
+#    description: Info description
+    license:
+      name: License name
+      url: http://license.url
+    contact:
+      name: Contact name
+      email: contact@email.com
+      url: http://email.com
+    termsOfService: http://terms.of.service
+  server:
+    description: Server description
+    url: http://localhost:${server.port}${server.servlet.context-path}
+  externalDocumentation:
+    description: External documentation description
+    url: http://externalDocumentation.url
