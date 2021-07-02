@@ -1,5 +1,6 @@
 package com.inditex.pricepoc.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.inditex.pricepoc.entity.Price;
@@ -12,9 +13,12 @@ import com.inditex.pricepoc.entity.Price;
 public interface PriceService {
 	
 	/**
-	 * List of all price
-	 * @return List of Price
+	 * Price 
+	 * @param productId 
+	 * @param brandId
+	 * @param fecha
+	 * @return
 	 */
-	  List<Price> getAll();
+	  Price findByProductIdAndBrandIdAndFecha(Long productId, int brandId, Timestamp fecha);
 
 }

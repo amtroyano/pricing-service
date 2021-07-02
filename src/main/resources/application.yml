@@ -32,6 +32,7 @@ spring:
               
 springdoc:
   swagger-ui:
+    disable-swagger-default-url: true
     path: /swagger-ui.html
     operationsSorter: method
     displayRequestDuration: true

@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -37,7 +39,7 @@ public class Price implements Serializable {
 	private Long id;
 	
 	@Column (name = "BRAND_ID", nullable = false, precision = 1)
-	private Long brandId;
+	private int brandId;
 	
 	@Column (name = "PRODUCT_ID", nullable = false, precision = 10)
 	private Long productId;

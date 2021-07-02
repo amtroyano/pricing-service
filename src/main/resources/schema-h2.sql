@@ -15,7 +15,8 @@ CREATE TABLE `PRICE` (
   `PRICE` decimal(4,2) NOT NULL COMMENT 'Precio final de venta',
   `CURR` varchar(10)  NOT NULL DEFAULT 'EUR' COMMENT 'ISO de la moneda.',
   `PRICE_LIST` int NOT NULL COMMENT 'Identificador de la tarifa de precios aplicable',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  FOREIGN KEY (BRAND_ID) REFERENCES BRAND(BRAND_ID)
 );
 
 
