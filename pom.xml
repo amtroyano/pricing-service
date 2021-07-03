@@ -11,7 +11,7 @@
 
 	<groupId>com.inditex</groupId>
 	<artifactId>price-poc</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>price-poc</name>
 	<description>Price project for Spring Boot</description>
 	<packaging>jar</packaging>
