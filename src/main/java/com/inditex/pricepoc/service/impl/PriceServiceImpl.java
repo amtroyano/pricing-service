@@ -1,6 +1,7 @@
 package com.inditex.pricepoc.service.impl;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -24,11 +25,11 @@ public class PriceServiceImpl implements PriceService {
 	}
 
 	@Override
-	public Price findByProductIdAndBrandIdAndFecha(Long productId, int brandId, Timestamp fecha) {
+	public Optional<Price> findByProductIdAndBrandIdAndFecha(int productId, int brandId, Timestamp fecha) {
 
 		var list = priceRepository.findByProductIdAndBrandIdAndStartDateBeforeAndEndDateAfterOrderByPriorityDesc(
 				productId, brandId, fecha, fecha);
-		return list.get(0);
+		return (!list.isEmpty() ? Optional.of(list.get(0)) : Optional.empty());
 	}
 
 }

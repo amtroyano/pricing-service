@@ -11,7 +11,7 @@ import com.inditex.pricepoc.entity.Price;
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Long> {
 
-	public List<Price> findByProductIdAndBrandIdAndStartDateBeforeAndEndDateAfterOrderByPriorityDesc(Long productId,
+	public List<Price> findByProductIdAndBrandIdAndStartDateBeforeAndEndDateAfterOrderByPriorityDesc(int productId,
 			int brandId, Timestamp fechaBefore, Timestamp fechaAfter);
 
 }

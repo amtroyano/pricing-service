@@ -1,20 +1,16 @@
 package com.inditex.pricepoc.controller;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +39,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "API Price Controller")
 @RestController
-@RequestMapping
+@RequestMapping(path = "price")
+@Validated
 @ApiResponses(value = {
 		@ApiResponse(responseCode = "404", description = "Not Found.", content = {
 				@Content(schema = @Schema(hidden = true)) }),
@@ -72,13 +69,13 @@ public class PriceController {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PriceDto> getValues(
 			@Parameter(description = "Fecha de aplicación") @RequestParam(required = true) Timestamp fechaAplicacion,
-			@Parameter(description = "Identificador de producto") @RequestParam(required = true) @Min(1) @Max(10) @NotBlank Long productId,
-			@Parameter(description = "Identificador de cadena") @RequestParam(required = true) @Min(1) @Max(1) @NotBlank int brandId) {
+			@Parameter(description = "Identificador de producto") @RequestParam(required = true) int productId,
+			@Parameter(description = "Identificador de cadena") @RequestParam(required = true) int brandId) {
 
-		Price value = priceService.findByProductIdAndBrandIdAndFecha(productId, brandId, fechaAplicacion);
+		Optional<Price> value = priceService.findByProductIdAndBrandIdAndFecha(productId, brandId, fechaAplicacion);
 
-		return new ResponseEntity<>(new ObjectMapper().convertValue(value, new TypeReference<PriceDto>() {
-		}), value != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+		return value.isPresent() ? new ResponseEntity<>(new ObjectMapper().convertValue(value.get(), new TypeReference<PriceDto>() {
+		}), HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 
 }

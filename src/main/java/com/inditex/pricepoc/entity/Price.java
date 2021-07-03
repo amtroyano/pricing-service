@@ -42,7 +42,7 @@ public class Price implements Serializable {
 	private int brandId;
 	
 	@Column (name = "PRODUCT_ID", nullable = false, precision = 10)
-	private Long productId;
+	private int productId;
 	
 	@Column (name = "PRIORITY", nullable = false)
 	private int priority;
