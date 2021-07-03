@@ -33,12 +33,12 @@ public class PriceControllerIntegrationTest {
 	@Test
 	public void notFoundTest() throws Exception {
 		
-		String fechaAplicacion = "2019-06-14 10:00:00";
+		String applicationDate = "2019-06-14 10:00:00";
 		
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(PATH)
 				.param("brandId", BRANDID)
 				.param("productId", PRODUCTID)
-				.param("fechaAplicacion", fechaAplicacion)
+				.param("applicationDate", applicationDate)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound())
 				.andReturn();
@@ -51,19 +51,19 @@ public class PriceControllerIntegrationTest {
 	@Test
 	public void unprocessableEntityTest() throws Exception {
 		
-		String fechaAplicacion = "2019-06-14";
+		String applicationDate = "2019-06-14";
 		
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(PATH)
 				.param("brandId", BRANDID)
 				.param("productId", PRODUCTID)
-				.param("fechaAplicacion", fechaAplicacion)
+				.param("applicationDate", applicationDate)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isUnprocessableEntity())
 				.andReturn();
 		
 		String resultMvc = result.getResponse().getContentAsString();
 		assertNotNull(resultMvc);
-		assertTrue(resultMvc.contains("fechaAplicacion"));
+		assertTrue(resultMvc.contains("applicationDate"));
 	}
 	
 	
@@ -79,7 +79,7 @@ public class PriceControllerIntegrationTest {
 
 		String resultMvc = result.getResponse().getContentAsString();
 		assertNotNull(resultMvc);
-		assertTrue(resultMvc.contains("fechaAplicacion"));
+		assertTrue(resultMvc.contains("applicationDate"));
 
 	}
 		
@@ -87,12 +87,12 @@ public class PriceControllerIntegrationTest {
 	@Test
 	public void priceTest1() throws Exception {
 		
-		String fechaAplicacion = "2020-06-14 10:00:00";
+		String applicationDate = "2020-06-14 10:00:00";
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
 				.param("brandId", BRANDID)
 				.param("productId", PRODUCTID)
-				.param("fechaAplicacion", fechaAplicacion)
+				.param("applicationDate", applicationDate)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("35.5"));
@@ -102,12 +102,12 @@ public class PriceControllerIntegrationTest {
 	@Test
 	public void priceTest2() throws Exception {
 
-		String fechaAplicacion = "2020-06-14 16:00:00";
+		String applicationDate = "2020-06-14 16:00:00";
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
 				.param("brandId", BRANDID)
 				.param("productId", PRODUCTID)
-				.param("fechaAplicacion", fechaAplicacion)
+				.param("applicationDate", applicationDate)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("25.45"));
@@ -116,12 +116,12 @@ public class PriceControllerIntegrationTest {
 	@Test
 	public void priceTest3() throws Exception {
 
-		String fechaAplicacion = "2020-06-14 21:00:00";
+		String applicationDate = "2020-06-14 21:00:00";
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
 				.param("brandId", BRANDID)
 				.param("productId", PRODUCTID)
-				.param("fechaAplicacion", fechaAplicacion)
+				.param("applicationDate", applicationDate)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("35.5"));
@@ -130,12 +130,12 @@ public class PriceControllerIntegrationTest {
 	@Test
 	public void priceTest4() throws Exception {
 
-		String fechaAplicacion = "2020-06-15 10:00:00";
+		String applicationDate = "2020-06-15 10:00:00";
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
 				.param("brandId", BRANDID)
 				.param("productId", PRODUCTID)
-				.param("fechaAplicacion", fechaAplicacion)
+				.param("applicationDate", applicationDate)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("30.5"));
@@ -144,12 +144,12 @@ public class PriceControllerIntegrationTest {
 	@Test
 	public void priceTest5() throws Exception {
 
-		String fechaAplicacion = "2020-06-16 21:00:00";
+		String applicationDate = "2020-06-16 21:00:00";
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
 				.param("brandId", BRANDID)
 				.param("productId", PRODUCTID)
-				.param("fechaAplicacion", fechaAplicacion)
+				.param("applicationDate", applicationDate)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("38.95"));

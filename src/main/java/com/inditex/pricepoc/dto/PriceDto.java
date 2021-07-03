@@ -1,14 +1,7 @@
 package com.inditex.pricepoc.dto;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.TimeZone;
-
-import org.hibernate.type.TimeZoneType;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,11 +14,11 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Objeto de salida tipo Price.
+ * Price response object
  *
  * @author Debora RT
  */
-@Schema(name = "PriceDto", description = "Price output object ")
+@Schema(name = "PriceDto", description = "Price reponse object ")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,24 +28,24 @@ import lombok.ToString;
 public class PriceDto {
 	
 	
-	@Schema(title = "Identificador de cadena", example = "1")
+	@Schema(title = "Brand identifier", example = "1")
 	private Long brandId;
 
-	@Schema(title = "Identificador de producto", example = "12345")
+	@Schema(title = "Product identifier", example = "12345")
 	private Long productId;
 	
-	@Schema(title = "Fecha inicio de aplicacion", example = "2000-01-01 23:59:000")
+	@Schema(title = "Price application start date", example = "2000-01-01 23:59:000")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="Europe/Madrid")
 	private Timestamp startDate;
 	
-	@Schema(title = "Fecha fin de aplicacion", example = "2000-01-01 00:00:000")
+	@Schema(title = "Price application end date", example = "2000-01-01 00:00:000")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone="Europe/Madrid")
 	private Timestamp endDate;
 
-	@Schema(title = "Precio final de venta", example = "30.50")
+	@Schema(title = "Final sale price", example = "30.50")
 	private BigDecimal price;
 		
-	@Schema(title = "Tarifa a aplicar", example = "1")
+	@Schema(title = "Price rate", example = "1")
 	private int priceList;
 	
 

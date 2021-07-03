@@ -7,18 +7,19 @@ import com.inditex.pricepoc.entity.Price;
 
 /**
  * Price Service
+ * 
  * @author Debora RT
  *
  */
 public interface PriceService {
 	
 	/**
-	 * Price 
-	 * @param productId 
-	 * @param brandId
-	 * @param fecha
-	 * @return
+	 * Find price by product, brand and date
+	 * @param productId Product identifier
+	 * @param brandId Brand identifier
+	 * @param applicationDate Application date
+	 * @return {@link Price}
 	 */
-	Optional<Price> findByProductIdAndBrandIdAndFecha(int productId, int brandId, Timestamp fecha);
+	Optional<Price> findByProductIdAndBrandIdAndDate(int productId, int brandId, Timestamp applicationDate);
 
 }

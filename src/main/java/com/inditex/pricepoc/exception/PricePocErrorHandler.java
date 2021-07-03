@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 /**
  * Custom price API error handling mechanism.
+ * @author Debora RT
+ *
  */
 @ControllerAdvice
 public class PricePocErrorHandler extends ResponseEntityExceptionHandler {
@@ -19,11 +21,14 @@ public class PricePocErrorHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
+		
+		String message = ex.getCause().toString();
+		
 		if (ex instanceof MethodArgumentTypeMismatchException) {
 			MethodArgumentTypeMismatchException exNv = (MethodArgumentTypeMismatchException) ex;
-			return new ResponseEntity<Object>(exNv.getName() + ": " + exNv.getCause(), HttpStatus.UNPROCESSABLE_ENTITY);
+			message = exNv.getName() + ": " + exNv.getCause();
 		}
-		return new ResponseEntity<Object>(ex, HttpStatus.UNPROCESSABLE_ENTITY);
+		return new ResponseEntity<Object>(message, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 
 	@Override

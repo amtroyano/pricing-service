@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Clase que representa un objeto en base de datos de tipo BRAND.
+ * Inditex Brand entity
  *
  * @author Debora RT
  */

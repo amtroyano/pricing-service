@@ -25,10 +25,10 @@ public class PriceServiceImpl implements PriceService {
 	}
 
 	@Override
-	public Optional<Price> findByProductIdAndBrandIdAndFecha(int productId, int brandId, Timestamp fecha) {
+	public Optional<Price> findByProductIdAndBrandIdAndDate(int productId, int brandId, Timestamp applicationDate) {
 
 		var list = priceRepository.findByProductIdAndBrandIdAndStartDateBeforeAndEndDateAfterOrderByPriorityDesc(
-				productId, brandId, fecha, fecha);
+				productId, brandId, applicationDate, applicationDate);
 		return (!list.isEmpty() ? Optional.of(list.get(0)) : Optional.empty());
 	}
 
