@@ -1,8 +1,0 @@
-com.inditex.pricepoc
-com.inditex.pricepoc.controller
-com.inditex.pricepoc.dto
-com.inditex.pricepoc.entity
-com.inditex.pricepoc.exception
-com.inditex.pricepoc.repository
-com.inditex.pricepoc.service
-com.inditex.pricepoc.service.impl
