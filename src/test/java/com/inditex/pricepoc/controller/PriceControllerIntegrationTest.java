@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @AutoConfigureMockMvc
@@ -35,11 +36,7 @@ public class PriceControllerIntegrationTest {
 		
 		String applicationDate = "2019-06-14 10:00:00";
 		
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(PATH)
-				.param("brandId", BRANDID)
-				.param("productId", PRODUCTID)
-				.param("applicationDate", applicationDate)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+		MvcResult result = requestPrice(applicationDate)
 				.andExpect(status().isNotFound())
 				.andReturn();
 
@@ -47,17 +44,14 @@ public class PriceControllerIntegrationTest {
 		assertTrue(StringUtils.isEmpty(resultMvc));
 
 	}
+
 	
 	@Test
 	public void unprocessableEntityTest() throws Exception {
 		
 		String applicationDate = "2019-06-14";
 		
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(PATH)
-				.param("brandId", BRANDID)
-				.param("productId", PRODUCTID)
-				.param("applicationDate", applicationDate)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+		MvcResult result = requestPrice(applicationDate)
 				.andExpect(status().isUnprocessableEntity())
 				.andReturn();
 		
@@ -89,11 +83,7 @@ public class PriceControllerIntegrationTest {
 		
 		String applicationDate = "2020-06-14 10:00:00";
 		
-		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
-				.param("brandId", BRANDID)
-				.param("productId", PRODUCTID)
-				.param("applicationDate", applicationDate)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+		requestPrice(applicationDate)
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("35.5"));
 	}
@@ -104,11 +94,7 @@ public class PriceControllerIntegrationTest {
 
 		String applicationDate = "2020-06-14 16:00:00";
 		
-		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
-				.param("brandId", BRANDID)
-				.param("productId", PRODUCTID)
-				.param("applicationDate", applicationDate)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+		requestPrice(applicationDate)
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("25.45"));
 	}
@@ -118,11 +104,7 @@ public class PriceControllerIntegrationTest {
 
 		String applicationDate = "2020-06-14 21:00:00";
 		
-		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
-				.param("brandId", BRANDID)
-				.param("productId", PRODUCTID)
-				.param("applicationDate", applicationDate)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+		requestPrice(applicationDate)
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("35.5"));
 	}
@@ -132,11 +114,7 @@ public class PriceControllerIntegrationTest {
 
 		String applicationDate = "2020-06-15 10:00:00";
 		
-		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
-				.param("brandId", BRANDID)
-				.param("productId", PRODUCTID)
-				.param("applicationDate", applicationDate)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+		requestPrice(applicationDate)
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.price").value("30.5"));
 	}
@@ -146,13 +124,17 @@ public class PriceControllerIntegrationTest {
 
 		String applicationDate = "2020-06-16 21:00:00";
 		
-		mockMvc.perform(MockMvcRequestBuilders.get(PATH)
+		requestPrice(applicationDate)
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.price").value("38.95"));
+	}
+	
+	private ResultActions requestPrice(String applicationDate) throws Exception {
+		return mockMvc.perform(MockMvcRequestBuilders.get(PATH)
 				.param("brandId", BRANDID)
 				.param("productId", PRODUCTID)
 				.param("applicationDate", applicationDate)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.price").value("38.95"));
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
 	}
 	
 }
