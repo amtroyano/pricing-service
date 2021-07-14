@@ -1,18 +1,42 @@
-#  Server
+##########################################
+#  Server configuration
 server:
   port: 8080
+  error:    whitelabel:      enabled: false
+  servlet:    application-display-name: ${spring.application.name}    context-path: /${spring.application.name}
+  ssl:
+    enabled: true
+    key-store: classpath:certs/try_cert.jks
+    key-store-password: 1234
+    trust-store: classpath:certs/try_cert.jks
+    trust-store-password: 1234
 
 
+##########################################
+#  Info configuration
+info:
+  application:
+    description: @project.description@
+    version: @project.version@
+
+
+##########################################
 # Spring Boot configuration
 spring:
-  profiles:
-    active: ${env.PROFILE:local}
+  application:
+    name: @project.name@  profiles:
+    active: dev
+    
+  # AOP
+  aop:    auto: false
+    
+  # Datasources
   datasource:
     username: sa
-    password: 
-    url: jdbc:h2:mem:pricepoc
-    platform: h2
-        
+    url: jdbc:h2:mem:pricing_service;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=mysql
+  sql:
+    init:      platform: h2
+    
   # JPA properties
   jpa:
     show-sql: true
@@ -26,38 +50,52 @@ spring:
         type: DEBUG
         temp:
           use_jdbc_metadata_defaults: false
+  # H2
   h2:
     console:
       enabled: true
-              
+
+##########################################
+# OpenApi configuration
 springdoc:
+  # UI
   swagger-ui:
+    enabled: true
     disable-swagger-default-url: true
     path: /swagger-ui.html
     operationsSorter: method
     displayRequestDuration: true
     csrf:
       enabled: true
-# custom path for api docs
+  # Docs
   api-docs:
     path: v3/api-docs
+    enabled: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
 
-  
-openapi:
-  info:
-#    title: Info title
-#    description: Info description
-    license:
-      name: License name
-      url: http://license.url
-    contact:
-      name: Contact name
-      email: contact@email.com
-      url: http://email.com
-    termsOfService: http://terms.of.service
-  server:
-    description: Server description
-    url: http://localhost:${server.port}${server.servlet.context-path}
-  externalDocumentation:
-    description: External documentation description
-    url: http://externalDocumentation.url
+
+##########################################
+# Managementmanagement:
+  endpoints:
+    web:
+      exposure:        include:        - health
+        - info
+
+        
+##########################################
+# Logging
+logging:
+  level:
+    org.zalando.logbook: TRACE
+
+logbook:
+  format:
+    style: http
+  exclude:
+    - /${spring.application.name}/swagger-**
+    - /${spring.application.name}/swagger-ui/**
+    - /${spring.application.name}/webjars/**
+    - /${spring.application.name}/actuator/**
+    - /${spring.application.name}/v3/api-docs/**
+    - /${spring.application.name}/h2-console
