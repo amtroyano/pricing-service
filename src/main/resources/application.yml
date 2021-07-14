@@ -2,8 +2,12 @@
 #  Server configuration
 server:
   port: 8080
-  error:    whitelabel:      enabled: false
-  servlet:    application-display-name: ${spring.application.name}    context-path: /${spring.application.name}
+  error:
+    whitelabel:
+      enabled: false
+  servlet:
+    application-display-name: ${spring.application.name}
+    context-path: /${spring.application.name}
   ssl:
     enabled: true
     key-store: classpath:certs/try_cert.jks
@@ -24,18 +28,24 @@ info:
 # Spring Boot configuration
 spring:
   application:
-    name: @project.name@  profiles:
+    name: @project.name@
+  profiles:
     active: dev
+  output:
+    ansi:
+      enabled: always
     
   # AOP
-  aop:    auto: false
+  aop:
+    auto: false
     
   # Datasources
   datasource:
     username: sa
     url: jdbc:h2:mem:pricing_service;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=mysql
   sql:
-    init:      platform: h2
+    init:
+      platform: h2
     
   # JPA properties
   jpa:
@@ -76,10 +86,13 @@ springdoc:
 
 
 ##########################################
-# Managementmanagement:
+# Management
+management:
   endpoints:
     web:
-      exposure:        include:        - health
+      exposure:
+        include:
+        - health
         - info
 
         
@@ -88,6 +101,8 @@ springdoc:
 logging:
   level:
     org.zalando.logbook: TRACE
+  file:
+    name: logs/${spring.application.name}.log
 
 logbook:
   format:

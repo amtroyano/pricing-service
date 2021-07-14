@@ -29,7 +29,6 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-		<dependency-check-maven.version>6.0.2</dependency-check-maven.version>
 		<springdoc-openapi-maven-plugin.version>1.3</springdoc-openapi-maven-plugin.version>
 
 		<!-- Dependencies versions -->
@@ -228,20 +227,6 @@
 					<outputFileName>opeanapi.yml</outputFileName>
 					<outputDir>${project.build.directory}/generated-openapi</outputDir>
 				</configuration>
-			</plugin>
-			
-			<!-- Libraries Vulneravility -->
-			<plugin>
-				<groupId>org.owasp</groupId>
-				<artifactId>dependency-check-maven</artifactId>
-				<version>${dependency-check-maven.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>aggregate</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 
 			<!-- JaCoCo plugin to collect testing coverage -->
