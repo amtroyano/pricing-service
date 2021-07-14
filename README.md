@@ -4,8 +4,6 @@
 
 Se trata de un servicio REST realizado en Spring Boot que expone un endpoint para recuperar un precio final (PVP) a partir de una serie de parámetros de entrada. Es un servicio básico al que se le han añadido algunas funcionalidades adicionales como es el caso de seguridad a través del protocolo TLS (https) y seguridad básica de un microservicio, de la documentación de la API a través de OpenApi v3, una clase gestora de las respuestas de error, trazas (logs) para las peticiones y respuestas, Spring Actuator para saber conocer la salud e información del servicio, JavaMoney para controlar la moneda y su cantidad, documentación de clases (Javadoc), Sleuth para analizar las trazas sobre peticiones, un fichero de entorno de producción, un fichero de muestra Jenkisfile para un hipotético despliegue y otro fichero de propiedades de Sonar para evaluar vulnerabilidades, duplicidades, code smell, hotspots, ... Por último JaCoCo para la cobertura de clases en caso de tests. En este aspecto cabe destacar que únicamente se incluyen los tests pedidos en la prueba técnica.
 
-También se ha añadido un plugin maven, para comprobar vulnerabilidades de librerías que puede ser ejecutado en local antes de realizar un hipotético despliegue.
-
 ## Consideraciones técnicas
 
 Para este microservicio se han usado las siguientes librerías y plugins con sus respectivas versiones. Así como se han usado algunos estándares para tratar con fechas o monedas.
@@ -15,12 +13,15 @@ Para este microservicio se han usado las siguientes librerías y plugins con sus
 * Maven 3.6.x
 * Lombok 1.18.20
 * Generador OpenApi v3 (Swagger)
-* Dependency-Check Plugin 6.0.2
 * JaCoCo 0.8.5
 * JavaDoc
 * Codificación: UTF-8
 * Fechas formateadas a: ISO-8601
 * JavaMoney: JSR-354
+* Eclipse Java Google Style
+* Plugin Color Ansi Escap Eclipse
+
+Se ha desarrollado el proyecto usando el fomateador de texto Eclipse Java Google Style.
 
 A parte se incluye un fichero Jenkisfile, para simular un despligue y otro sonar.properties para la evaluación de calidad de código. Estos ficheros se incluyen a modo de prueba, ya que no he tenido la oprtunidad de realizar las comprobaciones de los mismos.
 
@@ -29,13 +30,13 @@ A parte se incluye un fichero Jenkisfile, para simular un despligue y otro sonar
 Se ha optado por realizar un microservicio REST basado en Spring Boot y no en Spring Webflux, ni usando colas, ni haciendo uso de GraphQL, por el hecho de simplificar el ejemplo. De igual modo he seguido un patrón estándar de microservicio, desechando patrones como CQRS o Event Sourcing.
 
 Se han creado 2 entornos con sus respectivos ficheros de propiedades de spring: dev(local o desarrollo) y prd (producción).
-El entorno de ejecución o perfil donde he realizado el desarrollo ha sido con el perfil dev. La API se ha documentado mediante OpenApi y se encuentra disponible en la url http://localhost:8080/pricing_service/swagger-ui.html, una vez ejecutado. Se considera que en un entorno de desarrollo la API, debe estar disponible, mientras que para un entorno de producción no, y para ello se ha creado el archivo de propiedades correspondiente para poder desactivar esta característica. Este ha sido el motivo de incorporar otro entorno simulando un entorno de producción.
+El entorno de ejecución o perfil donde he realizado el desarrollo ha sido con el perfil dev. La API se ha documentado mediante OpenApi y se encuentra disponible en la url https://localhost:8080/pricing-service/swagger-ui.html, una vez ejecutado. Se considera que en un entorno de desarrollo la API, debe estar disponible, mientras que para un entorno de producción no, y para ello se ha creado el archivo de propiedades correspondiente para poder desactivar esta característica. Este ha sido el motivo de incorporar otro entorno simulando un entorno de producción.
 
 Se ha incorporado un plugin de generación de ficheros openapi, para disponer de una especificación y poder usarla directamente en un servicio como API Gateway de AWS, o API Management de Azure.
 
 Se ha incluido seguridad a nivel básica usando Spring Security para este ejemplo, al igual que el uso de https en las comunicaciones. En el caso de HTTPS, se ha autogenerado un almacen de claves presente en la la ruta src/main/resources/certs/try_cert.jks. Se trata un almacén con la información básica y válido para el DNS localhost y también para la IP 127.0.0.1. No está hecho para un entorno de producción.
 
-Por otro lado se ha decido realizar el traceo de las peticiones mediante la librería de zalando, que properciona bastante información de solicitudes y respuestas. También se ha añadido Spring Clous Sleuth, para que ingrese en las trazas, el servicio, el id de la traza padre e hija. He decidido incorporarlo, para demostrar que las trazas podrían ser analizadas desde su origen usando algún servicio para ello, como Zipkin, por ejemplo.
+Por otro lado se ha decido realizar el traceo de las peticiones mediante la librería de zalando que proporciona bastante información de solicitudes y respuestas y las trazas para el entorno de dev, se sacan por consola y se almacenan en un fichero con política de rotación. Mientras que en el entorno prd, solo se usa el fichero. También se ha añadido Spring Clous Sleuth, para que ingrese en las trazas, el servicio, el id de la traza padre e hija. He decidido incorporarlo, para demostrar que las trazas podrían ser analizadas desde su origen usando algún servicio para ello, como Zipkin, por ejemplo.
 
 También se ha decido documentar las clases y métodos, para continuar con el guión de buenas prácticas y para la compilación del proyecto, se ha decido usar JaCoCo, excluyendose determinados paquetes, para tener una covertura.
 

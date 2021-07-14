@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- APPENDER CONFIGURATION -->
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+	<springProperty name="service.name" source="spring.application.name" defaultValue="" />
+	
+	<property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [${service.name},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] ${PID:- } --- [%t] %-40.40logger{39} : %m%n%wEx"/>
+	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/app.log}"/>
+	
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+		<file>${LOG_FILE}</file>
+
+		<!-- Log rotation by day -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>10</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="COLOR_CONSOLE"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<withJansi>true</withJansi>
+		<encoder>
+			<pattern>%d{ISO8601} %highlight(%-5level) %magenta([${service.name}),%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}] %cyan(%c{1}) : %highlight(%m%n%wEx)
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- LOGGING PROFILES -->
+	<springProfile name="dev">
+		<root level="info">
+			<appender-ref ref="COLOR_CONSOLE" />
+			<appender-ref ref="FILE"/>
+		</root>
+	</springProfile>
+
+	<springProfile name="prd">
+		<root level="info">
+			<appender-ref ref="FILE"/>
+		</root>
+	</springProfile>
+	
+</configuration>
