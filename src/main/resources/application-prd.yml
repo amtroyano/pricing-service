@@ -1,0 +1,33 @@
+##########################################
+# Spring Boot configuration
+spring:
+  # JPA properties
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        use_sql_comments: false
+        format_sql: false
+        type: INFO
+  # H2
+  h2:
+    console:
+      enabled: false
+
+##########################################
+# OpenApi configuration
+springdoc:
+  # UI
+  swagger-ui:
+    enabled:
+      enabled: false
+  # Docs
+  api-docs:
+    enabled: false
+
+
+##########################################
+# Logging
+logging:
+  level:
+    org.zalando.logbook: INFO

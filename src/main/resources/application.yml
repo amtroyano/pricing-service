@@ -1,0 +1,101 @@
+##########################################
+#  Server configuration
+server:
+  port: 8080
+  error:    whitelabel:      enabled: false
+  servlet:    application-display-name: ${spring.application.name}    context-path: /${spring.application.name}
+  ssl:
+    enabled: true
+    key-store: classpath:certs/try_cert.jks
+    key-store-password: 1234
+    trust-store: classpath:certs/try_cert.jks
+    trust-store-password: 1234
+
+
+##########################################
+#  Info configuration
+info:
+  application:
+    description: @project.description@
+    version: @project.version@
+
+
+##########################################
+# Spring Boot configuration
+spring:
+  application:
+    name: @project.name@  profiles:
+    active: dev
+    
+  # AOP
+  aop:    auto: false
+    
+  # Datasources
+  datasource:
+    username: sa
+    url: jdbc:h2:mem:pricing_service;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=mysql
+  sql:
+    init:      platform: h2
+    
+  # JPA properties
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        use_sql_comments: true
+        format_sql: true
+        type: DEBUG
+        temp:
+          use_jdbc_metadata_defaults: false
+  # H2
+  h2:
+    console:
+      enabled: true
+
+##########################################
+# OpenApi configuration
+springdoc:
+  # UI
+  swagger-ui:
+    enabled: true
+    disable-swagger-default-url: true
+    path: /swagger-ui.html
+    operationsSorter: method
+    displayRequestDuration: true
+    csrf:
+      enabled: true
+  # Docs
+  api-docs:
+    path: v3/api-docs
+    enabled: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+
+##########################################
+# Managementmanagement:
+  endpoints:
+    web:
+      exposure:        include:        - health
+        - info
+
+        
+##########################################
+# Logging
+logging:
+  level:
+    org.zalando.logbook: TRACE
+
+logbook:
+  format:
+    style: http
+  exclude:
+    - /${spring.application.name}/swagger-**
+    - /${spring.application.name}/swagger-ui/**
+    - /${spring.application.name}/webjars/**
+    - /${spring.application.name}/actuator/**
+    - /${spring.application.name}/v3/api-docs/**
+    - /${spring.application.name}/h2-console
