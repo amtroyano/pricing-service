@@ -7,7 +7,7 @@
 
 	<springProperty name="service.name" source="spring.application.name" defaultValue="" />
 	
-	<property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [${service.name},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] ${PID:- } --- [%t] %-40.40logger{39} : %m%n%wEx"/>
+	<property name="FILE_LOG_PATTERN" value="%d{ISO8601} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- %c{1} : %m%n%wEx"/>
 	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/app.log}"/>
 	
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -40,7 +40,6 @@
 	<springProfile name="dev">
 		<root level="info">
 			<appender-ref ref="COLOR_CONSOLE" />
-			<appender-ref ref="FILE"/>
 		</root>
 	</springProfile>
 
